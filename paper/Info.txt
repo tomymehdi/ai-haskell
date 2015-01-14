@@ -1,0 +1,21 @@
+Ben Walker, February 2013
+ben-walker@northwestern.edu
+__________________________________________
+Experiment list
+------------------------------------------
+_e1: Only one experiment condition/protcol for this experment.
+
+__________________________________________
+Data Comments:
+------------------------------------------
+The data includes both Training and Control data.  During Training,
+subjects were instructed to assist the movement of the robot as it 
+moved toward a target.  During the Control phase, the subjects used 
+EMGs to attempt to direct the robot toward the target.  EMGs and the 
+trajectories were recorded, but please note:
+THE EMGs DROVE A DECODER, WHICH DROVE THE ROBOT'S MOVEMENT
+
+__________________________________________
+Notes:
+------------------------------------------
+Target position was not recorded for the training reaches.
