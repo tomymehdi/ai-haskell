@@ -1,0 +1,31 @@
+Installation guide
+
+On ubuntu 14.04
+
+Install haskell plataform
+Install wxHaskel which need wxWidget
+
+To install wxwidget:
+sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
+
+sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.1/ubuntu/ trusty universe'
+
+sudo apt-get update
+
+sudo apt-get install libwxbase3.0-0-unofficial libwxbase3.0-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev wx3.0-headers wx-common
+
+To install wxHaskell:
+cabal install wx
+
+Install HNN
+
+sudo apt-get install libgsl0-dev liblapack-dev libatlas-base-dev
+cabal update
+cabal install hmatrix
+
+git clone git://github.com/alpmestan/HNN.git
+cd HNN
+cabal configure
+cabal build
+cabal install (to add it in your ghc package list, etc)
+cabal haddock (to generate the documentation)
