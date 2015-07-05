@@ -1,37 +1,40 @@
-Installation guide
+Que se necesita?
 
-On ubuntu 14.04
+Instalar haskell plataform 
+Instalar wxHaskel que necesita wxWidget 
+Instalar reactive banana
+Instalar la libreria HNN(https://github.com/alpmestan/hnn)
 
-Install haskell plataform
-Install wxHaskel which need wxWidget
+Como se instala?
+Para instalar haskell platform:
+    sudo apt-get install haskell-platform
 
-sudo apt-get install haskell-platform
+Para instalar wxwidget: 
+sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc 
+sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.1/ubuntu/ trusty universe' sudo apt-get update 
+sudo apt-get install libwxbase3.0-0-unofficial libwxbase3.0-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev wx3.0-headers wx-common 
 
-To install wxwidget:
-sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
-
-sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.1/ubuntu/ trusty universe'
-
-sudo apt-get update
-
-sudo apt-get install libwxbase3.0-0-unofficial libwxbase3.0-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev wx3.0-headers wx-common
-
-To install wxHaskell:
+Para instalar  wxHaskell: 
 cabal update
-cabal install wx
+cabal install wx 
 
-Install HNN
-
-sudo apt-get install libgsl0-dev liblapack-dev libatlas-base-dev
+Para instalar reactive banana:
 cabal update
-cabal install hmatrix
-
-git clone git://github.com/alpmestan/HNN.git
-cd HNN
-cabal configure
-cabal build
-cabal install
-cabal haddock
-
-cabal install reactive-banana
+    cabal install reactive-banana
 cabal install reactive-banana-wx
+
+Instalar HNN:
+sudo apt-get install libgsl0-dev liblapack-dev libatlas-base-dev 
+cabal update 
+cabal install hmatrix 
+git clone git://github.com/alpmestan/HNN.git
+cd HNN 
+cabal configure 
+cabal build 
+cabal install
+
+Como se usa?
+ghc Experiments.hs
+./Experiments
+
+Los archivos de puntos deben estar en xy.txt e z.txt
