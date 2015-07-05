@@ -5,6 +5,8 @@ On ubuntu 14.04
 Install haskell plataform
 Install wxHaskel which need wxWidget
 
+sudo apt-get install haskell-platform
+
 To install wxwidget:
 sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
 
@@ -15,6 +17,7 @@ sudo apt-get update
 sudo apt-get install libwxbase3.0-0-unofficial libwxbase3.0-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev wx3.0-headers wx-common
 
 To install wxHaskell:
+cabal update
 cabal install wx
 
 Install HNN
@@ -27,5 +30,8 @@ git clone git://github.com/alpmestan/HNN.git
 cd HNN
 cabal configure
 cabal build
-cabal install (to add it in your ghc package list, etc)
-cabal haddock (to generate the documentation)
+cabal install
+cabal haddock
+
+cabal install reactive-banana
+cabal install reactive-banana-wx

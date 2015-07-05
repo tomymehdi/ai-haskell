@@ -39,42 +39,6 @@ gui = do
                                   widget lMiddleLayers, widget iMiddleLayers, 
                                   widget lLearningRate, widget iLearningRate, 
                                   widget bStart, widget bQuit ] ]
-    set f [ on paint := drawNetwork iMiddleLayers]
-
-drawNetwork :: Textual w => w -> DC a -> t -> IO ()
-drawNetwork iMiddleLayers dc area = do
-    middleLayersString  <- get iMiddleLayers text
-    let middleLayersSplited = splitOn "," middleLayersString
-    let middleLayers = map (\s -> read s :: Int) middleLayersSplited
-
-    --Draw neurons
-    let indexedMiddleLayers = zip [1..] middleLayers
-    drawLayers dc ([(0,2)] ++ indexedMiddleLayers)
-    --Draw connections
-    line dc (Point 150 30) (Point 150 80) []
-    line dc (Point 200 30) (Point 150 80) []
-    line dc (Point 150 30) (Point 200 80) []
-    line dc (Point 200 30) (Point 200 80) []
-    line dc (Point 150 80) (Point 175 130) []
-    line dc (Point 200 80) (Point 175 130) []
-
-drawLayers :: DC a -> [(Int, Int)] -> IO [[()]]
-drawLayers dc layers = mapM (drawCirclesRow dc) layers
-
-drawCirclesRow :: DC a -> (Int, Int) -> IO [()]
-drawCirclesRow dc positionCount = do
-    let xlist = [1..snd(positionCount)]
-    let amount = snd(positionCount) :: Int
-    let y = fst(positionCount) :: Int
-    let ylist = replicate amount y
-    let list = zip xlist ylist
-    mapM (drawCircle dc) list
-
-drawCircle :: DC a -> (Int, Int) -> IO ()
-drawCircle dc pos = do
-    let xPos = fst(pos)
-    let yPos = snd(pos)
-    circle dc (Point (150+50*xPos) (80+50*yPos)) 10 [brushKind := BrushSolid, brushColor := red]
 
 parseInputAndTrain :: (Paint w, Textual w1, Textual w2, Textual w3) => w -> w1 -> w2 -> w3 -> IO ()
 parseInputAndTrain f iEpocs iMiddleLayers iLearningRate = do
@@ -89,11 +53,32 @@ parseInputAndTrain f iEpocs iMiddleLayers iLearningRate = do
 
 trainNeuralNetwork :: Int -> Int -> [Int] -> Int -> Double -> IO()
 trainNeuralNetwork epocs firstLayer middleLayers outputLayer learningRate =  do
-    n <- createNetwork firstLayer middleLayers outputLayer
-    mapM_ (putStrLn . show . output n tanh . fst) samples
-    putStrLn "------------------"
-    let n' = trainNTimes epocs learningRate tanh tanh' n samples
-    mapM_ (putStrLn . show . output n' tanh . fst) samples
+
+    xys <- readFile "xy.txt"
+    zs <- readFile "z.txt"
+
+    let list1 = parse xys
+    let list2 = parse zs
+    let list11 = map fromList list1
+    let list22 = map fromList list2
+    let samples2 = zip list11 list22
+
+    putStrLn "1------------------"
+    n <- createNetwork firstLayer middleLayers outputLayer :: IO (Network Double)
+    mapM_ (putStrLn . show) samples2
+    mapM_ (putStrLn . show . output n id . fst) samples2
+    mapM_ (putStrLn . show . output n tanh . fst) samples2
+    putStrLn "2------------------"
+    let n' = trainNTimes epocs learningRate tanh tanh' n samples2
+    mapM_ (putStrLn . show . output n' id . fst) samples2
+    mapM_ (putStrLn . show . output n' tanh . fst) samples2
+
+parse :: String -> [[Double]]
+parse a = map (map read . words) (lines a)
+
+oneList :: [a] -> [b] -> [(a, b)]
+oneList []     _      = []
+oneList (x:xs) (y:ys) = (x, y) : oneList xs ys
 
 samples :: Samples Double
 samples = [ (fromList [0, 0], fromList [0])
@@ -101,3 +86,4 @@ samples = [ (fromList [0, 0], fromList [0])
           , (fromList [1, 0], fromList [1])
           , (fromList [1, 1], fromList [0])
           ]
+    
