@@ -66,11 +66,9 @@ trainNeuralNetwork epocs firstLayer middleLayers outputLayer learningRate =  do
     putStrLn "1------------------"
     n <- createNetwork firstLayer middleLayers outputLayer :: IO (Network Double)
     mapM_ (putStrLn . show) samples2
-    mapM_ (putStrLn . show . output n id . fst) samples2
     mapM_ (putStrLn . show . output n tanh . fst) samples2
     putStrLn "2------------------"
     let n' = trainNTimes epocs learningRate tanh tanh' n samples2
-    mapM_ (putStrLn . show . output n' id . fst) samples2
     mapM_ (putStrLn . show . output n' tanh . fst) samples2
 
 parse :: String -> [[Double]]
